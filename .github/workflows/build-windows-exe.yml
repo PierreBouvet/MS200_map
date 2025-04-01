@@ -28,7 +28,7 @@ jobs:
 
     - name: Build EXE
       run: |
-        pyinstaller --onefile --windowed --icon=app.ico serial_gui_qt.py
+        pyinstaller --onefile --windowed --icon=app.tiff serial_gui_qt.py
 
     - name: Upload Executable
       uses: actions/upload-artifact@v4
