@@ -1,0 +1,3 @@
+([('main',
+   '/Users/pierrebouvet/Documents/Code/MS2000 GUI driver/dist/main',
+   'EXECUTABLE')],)
