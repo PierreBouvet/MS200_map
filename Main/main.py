@@ -93,7 +93,8 @@ class SerialApp(QMainWindow):
             for obj in self.objectives:
                 self.ui.cb_Objective.addItem(str(obj[0]))
         except Exception as e:
-            QMessageBox.critical(self, "File Error", f"Could not load objectives: {e}")
+            directory = os.path.dirname(os.path.realpath(__file__))
+            QMessageBox.critical(self, "File Error", f"Current directory: {directory}. Could not load objectives: {e}")    
     
     def launch_measure(self):
         if not self.serial_conn or not self.serial_conn.is_open:
