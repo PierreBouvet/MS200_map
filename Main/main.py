@@ -1,4 +1,5 @@
 import sys
+import os
 import serial
 import serial.tools.list_ports
 import pandas as pd
@@ -74,10 +75,19 @@ class SerialApp(QMainWindow):
             self.serial_conn.close()
             self.serial_conn = None
             self.ui.tB_Log.append("Disconnected from serial port.")
+            self.ui.cb_Objective.setEnabled(False)
+            self.ui.le_Exposure.setEnabled(False)
+            self.ui.sB_Nx.setEnabled(False)
+            self.ui.sB_Ny.setEnabled(False)
+            self.ui.le_Rx.setEnabled(False)
+            self.ui.le_Ry.setEnabled(False)
+            self.ui.b_Launch.setEnabled(False)
     
     def load_objectives(self):
         try:
-            df = pd.read_excel("objectives.xlsx", header=None)
+            directory = os.path.dirname(os.path.realpath(__file__))
+            directory = "/".join(directory.split("/")[:-1])
+            df = pd.read_excel(f"{directory}/objectives.xlsx", header=None)
             self.objectives = df.to_dict(orient='records')
             self.ui.cb_Objective.clear()
             for obj in self.objectives:
@@ -107,13 +117,13 @@ class SerialApp(QMainWindow):
         
         commands = [
             f"SN X=2 Y=1",
-            f"RT Z={exposure}",
+            f"RT Z={float(exposure):.4f}",
             "TTL Y=2",
             "B X=0.1 Y=0.1",
-            f"R X={dx} Y={dy}",
+            f"R X={float(dx):.4f} Y={float(dy):.4f}",
             "Z",
-            f"AR X={nx} Y={ny} Z={deltax} F={deltay}",
-            f"AH X={xval} Y={yval}",
+            f"AR X={nx} Y={ny} Z={float(deltax):.4f} F={float(deltay):.4f}",
+            f"AH X={float(xval):.4f} Y={float(yval):.4f}",
             "AR"
         ]
         
