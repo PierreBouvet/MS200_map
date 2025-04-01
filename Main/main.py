@@ -29,7 +29,7 @@ class SerialApp(QMainWindow):
         
         # Connect buttons
         self.ui.b_ScanPorts.clicked.connect(self.scan_ports)
-        self.ui.b_ScanPorts.clicked.connect(self.open_objective_file)
+        self.ui.b_LoadObjective.clicked.connect(self.open_objective_file)
         self.ui.b_ConnectDisconnect.clicked.connect(self.toggle_connection)
         self.ui.b_Launch.clicked.connect(self.launch_measure)
         
@@ -40,6 +40,8 @@ class SerialApp(QMainWindow):
         self.objective_file = QFileDialog.getOpenFileName(self, "Open Objective File")[0]
         if self.objective_file:
             self.load_objectives()
+            self.ui.cb_Objective.setEnabled(True)
+
 
     def scan_ports(self):
         self.ui.cb_Ports.clear()
