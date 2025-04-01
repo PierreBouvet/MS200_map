@@ -31,7 +31,7 @@ jobs:
         pyinstaller --onefile --windowed --icon=app.ico serial_gui_qt.py
 
     - name: Upload Executable
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: Windows-Executable
         path: dist/serial_gui_qt.exe  # This is where PyInstaller puts the .exe
