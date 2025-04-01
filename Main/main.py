@@ -3,10 +3,11 @@ import os
 import serial
 import serial.tools.list_ports
 import pandas as pd
-from PySide6.QtWidgets import QApplication, QMainWindow, QMessageBox
+from PySide6.QtWidgets import QApplication, QMainWindow, QMessageBox, QFileDialog
 from Main.UI.main_window_ui import Ui_MainWindow
 
 class SerialApp(QMainWindow):
+    objective_file = ""
     def __init__(self):
         super().__init__()
         self.ui = Ui_MainWindow()
@@ -24,15 +25,22 @@ class SerialApp(QMainWindow):
         self.ui.le_Rx.setEnabled(False)
         self.ui.le_Ry.setEnabled(False)
         self.ui.b_Launch.setEnabled(False)
+        self.ui.b_LoadObjective.setEnabled(False)
         
         # Connect buttons
         self.ui.b_ScanPorts.clicked.connect(self.scan_ports)
+        self.ui.b_ScanPorts.clicked.connect(self.open_objective_file)
         self.ui.b_ConnectDisconnect.clicked.connect(self.toggle_connection)
         self.ui.b_Launch.clicked.connect(self.launch_measure)
         
         # Populate baud rate options
         self.ui.cb_Baudrate.addItems(["9600","19200","28800","115200"])
     
+    def open_objective_file(self):
+        self.objective_file = QFileDialog.getOpenFileName(self, "Open Objective File")[0]
+        if self.objective_file:
+            self.load_objectives()
+
     def scan_ports(self):
         self.ui.cb_Ports.clear()
         ports = [port.device for port in serial.tools.list_ports.comports()]
@@ -58,15 +66,14 @@ class SerialApp(QMainWindow):
             self.ui.tB_Log.append(f"Connected to {port} at {baudrate}")
             
             # Enable all widgets after connection
-            self.ui.cb_Objective.setEnabled(True)
             self.ui.le_Exposure.setEnabled(True)
             self.ui.sB_Nx.setEnabled(True)
             self.ui.sB_Ny.setEnabled(True)
             self.ui.le_Rx.setEnabled(True)
             self.ui.le_Ry.setEnabled(True)
             self.ui.b_Launch.setEnabled(True)
-            
-            self.load_objectives()
+            self.ui.b_LoadObjective.setEnabled(True)
+
         except Exception as e:
             QMessageBox.critical(self, "Connection Error", str(e))
     
@@ -85,9 +92,7 @@ class SerialApp(QMainWindow):
     
     def load_objectives(self):
         try:
-            directory = os.path.dirname(os.path.realpath(__file__))
-            directory = "/".join(directory.split("/")[:-1])
-            df = pd.read_excel(f"{directory}/objectives.xlsx", header=None)
+            df = pd.read_excel(self.objective_file, header=None)
             self.objectives = df.to_dict(orient='records')
             self.ui.cb_Objective.clear()
             for obj in self.objectives:

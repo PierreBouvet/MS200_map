@@ -127,30 +127,35 @@ class Ui_MainWindow(object):
         self.frame_4.setFrameShadow(QFrame.Shadow.Raised)
         self.gridLayout_4 = QGridLayout(self.frame_4)
         self.gridLayout_4.setObjectName(u"gridLayout_4")
+        self.le_Exposure = QLineEdit(self.frame_4)
+        self.le_Exposure.setObjectName(u"le_Exposure")
+
+        self.gridLayout_4.addWidget(self.le_Exposure, 2, 1, 1, 1)
+
         self.cb_Objective = QComboBox(self.frame_4)
         self.cb_Objective.setObjectName(u"cb_Objective")
 
-        self.gridLayout_4.addWidget(self.cb_Objective, 0, 1, 1, 1)
+        self.gridLayout_4.addWidget(self.cb_Objective, 1, 1, 1, 1)
 
         self.l_Objective = QLabel(self.frame_4)
         self.l_Objective.setObjectName(u"l_Objective")
 
-        self.gridLayout_4.addWidget(self.l_Objective, 0, 0, 1, 1)
-
-        self.b_Launch = QPushButton(self.frame_4)
-        self.b_Launch.setObjectName(u"b_Launch")
-
-        self.gridLayout_4.addWidget(self.b_Launch, 2, 0, 1, 2)
+        self.gridLayout_4.addWidget(self.l_Objective, 1, 0, 1, 1)
 
         self.l_Exposure = QLabel(self.frame_4)
         self.l_Exposure.setObjectName(u"l_Exposure")
 
-        self.gridLayout_4.addWidget(self.l_Exposure, 1, 0, 1, 1)
+        self.gridLayout_4.addWidget(self.l_Exposure, 2, 0, 1, 1)
 
-        self.le_Exposure = QLineEdit(self.frame_4)
-        self.le_Exposure.setObjectName(u"le_Exposure")
+        self.b_Launch = QPushButton(self.frame_4)
+        self.b_Launch.setObjectName(u"b_Launch")
 
-        self.gridLayout_4.addWidget(self.le_Exposure, 1, 1, 1, 1)
+        self.gridLayout_4.addWidget(self.b_Launch, 3, 0, 1, 2)
+
+        self.b_LoadObjective = QPushButton(self.frame_4)
+        self.b_LoadObjective.setObjectName(u"b_LoadObjective")
+
+        self.gridLayout_4.addWidget(self.b_LoadObjective, 0, 0, 1, 2)
 
 
         self.gridLayout.addWidget(self.frame_4, 1, 1, 1, 2)
@@ -170,7 +175,7 @@ class Ui_MainWindow(object):
     # setupUi
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
+        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MS2000 Mapping Facilitator", None))
         self.b_ScanPorts.setText(QCoreApplication.translate("MainWindow", u"Scan Ports", None))
         self.b_ConnectDisconnect.setText(QCoreApplication.translate("MainWindow", u"Connect/Disconnect", None))
         self.l_Nx.setText(QCoreApplication.translate("MainWindow", u"Number of points in x:", None))
@@ -178,7 +183,8 @@ class Ui_MainWindow(object):
         self.l_Rx.setText(QCoreApplication.translate("MainWindow", u"x resolution (mm):", None))
         self.l_Ry.setText(QCoreApplication.translate("MainWindow", u"y resolution(mm): ", None))
         self.l_Objective.setText(QCoreApplication.translate("MainWindow", u"Objective", None))
-        self.b_Launch.setText(QCoreApplication.translate("MainWindow", u"Launch Mapping", None))
         self.l_Exposure.setText(QCoreApplication.translate("MainWindow", u"Exposure(ms)", None))
+        self.b_Launch.setText(QCoreApplication.translate("MainWindow", u"Launch Mapping", None))
+        self.b_LoadObjective.setText(QCoreApplication.translate("MainWindow", u"Load Objective Calibration Spreadsheet", None))
     # retranslateUi
 
