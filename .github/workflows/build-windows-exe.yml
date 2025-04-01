@@ -1,0 +1,37 @@
+name: Build Windows Executable
+
+on:
+  push:
+    branches:
+      - main  # Runs when you push to the 'main' branch
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3  # Gets your code from GitHub
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'  # Use the Python version you need
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pyinstaller PySide6 pandas pyserial  # Add any other dependencies
+
+    - name: Build EXE
+      run: |
+        pyinstaller --onefile --windowed --icon=app.ico serial_gui_qt.py
+
+    - name: Upload Executable
+      uses: actions/upload-artifact@v3
+      with:
+        name: Windows-Executable
+        path: dist/serial_gui_qt.exe  # This is where PyInstaller puts the .exe
