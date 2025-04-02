@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>MS2000 Mapping Facilitator</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../../Icons.qrc">
+    <normaloff>:/Images/app_3x3.tiff</normaloff>:/Images/app_3x3.tiff</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="1" column="0">
