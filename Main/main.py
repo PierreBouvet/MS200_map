@@ -70,6 +70,13 @@ class SerialApp(QMainWindow):
             self.ui.b_Launch.setEnabled(False)
             self.ui.b_LoadObjective.setEnabled(False)
 
+    def is_device_busy(self) -> bool:
+        """Returns True if any axis is busy."""
+        self.serial_conn.write(f"/\r\n".encode())
+        response = self.serial_conn.readline().decode().strip()
+            
+        return "B" in response
+
     def load_objectives(self):
         try:
             df = pd.read_excel(self.objective_file, header=None)
@@ -151,6 +158,10 @@ class SerialApp(QMainWindow):
                 return
             
             self.ui.tB_Log.append(f"< {response}")
+
+            busy = True
+            while busy:
+                busy = self.is_device_busy()
     
 if __name__ == "__main__":
     app = QApplication(sys.argv)
