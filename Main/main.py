@@ -36,29 +36,6 @@ class SerialApp(QMainWindow):
         # Populate baud rate options
         self.ui.cb_Baudrate.addItems(["9600","19200","28800","115200"])
     
-    def open_objective_file(self):
-        self.objective_file = QFileDialog.getOpenFileName(self, "Open Objective File")[0]
-        if self.objective_file:
-            self.load_objectives()
-            self.ui.cb_Objective.setEnabled(True)
-
-
-    def scan_ports(self):
-        self.ui.cb_Ports.clear()
-        ports = [port.device for port in serial.tools.list_ports.comports()]
-        self.ui.cb_Ports.addItems(ports)
-        
-        if ports:
-            self.ui.cb_Ports.setEnabled(True)
-            self.ui.cb_Baudrate.setEnabled(True)
-            self.ui.b_ConnectDisconnect.setEnabled(True)
-    
-    def toggle_connection(self):
-        if self.serial_conn and self.serial_conn.is_open:
-            self.disconnect_from_serial()
-        else:
-            self.connect_to_serial()
-    
     def connect_to_serial(self):
         port = self.ui.cb_Ports.currentText()
         baudrate = int(self.ui.cb_Baudrate.currentText())
@@ -91,7 +68,8 @@ class SerialApp(QMainWindow):
             self.ui.le_Rx.setEnabled(False)
             self.ui.le_Ry.setEnabled(False)
             self.ui.b_Launch.setEnabled(False)
-    
+            self.ui.b_LoadObjective.setEnabled(False)
+
     def load_objectives(self):
         try:
             df = pd.read_excel(self.objective_file, header=None)
@@ -124,20 +102,42 @@ class SerialApp(QMainWindow):
         yval = -ny * float(deltay) / 2
         
         commands = [
-            f"SN X=2 Y=1",
-            f"RT Z={float(exposure):.4f}",
-            "TTL Y=2",
-            "B X=0.1 Y=0.1",
-            f"R X={float(dx):.4f} Y={float(dy):.4f}",
-            "Z",
-            f"AR X={nx} Y={ny} Z={float(deltax):.4f} F={float(deltay):.4f}",
-            f"AH X={float(xval):.4f} Y={float(yval):.4f}",
-            "AR"
+            f"SN X=2 Y=1 F=0", # Sets the fast scan axis to y (Y=1) and slow scan axis to x (X=2) and scan pattern to raster scan (F=0)
+            f"RT Z={float(exposure):.4f}", # Sets the waiting time between scans
+            "TTL Y=2", # Initiates the trigger out command
+            "B X=0.05 Y=0.05", # Sets the backlash to 50 microns
+            f"R X={float(dx):.4f} Y={float(dy):.4f}", # Moves the stage to center the position on the objective center
+            "Z", # Zeroth the stage
+            f"AR X={nx} Y={ny} Z={float(deltax):.4f} F={float(deltay):.4f}", # Sets the array to be acquired
+            f"AH X={float(xval):.4f} Y={float(yval):.4f}", # Moves the stage to the first point of the array
+            "AR" # Launches the scan
         ]
         
         for cmd in commands:
             self.send_command(cmd)
     
+    def open_objective_file(self):
+        self.objective_file = QFileDialog.getOpenFileName(self, "Open Objective File")[0]
+        if self.objective_file:
+            self.load_objectives()
+            self.ui.cb_Objective.setEnabled(True)
+
+    def scan_ports(self):
+        self.ui.cb_Ports.clear()
+        ports = [port.device for port in serial.tools.list_ports.comports()]
+        self.ui.cb_Ports.addItems(ports)
+        
+        if ports:
+            self.ui.cb_Ports.setEnabled(True)
+            self.ui.cb_Baudrate.setEnabled(True)
+            self.ui.b_ConnectDisconnect.setEnabled(True)
+    
+    def toggle_connection(self):
+        if self.serial_conn and self.serial_conn.is_open:
+            self.disconnect_from_serial()
+        else:
+            self.connect_to_serial()
+
     def send_command(self, cmd):
         if self.serial_conn:
             self.serial_conn.write(f"{cmd}\r\n".encode())

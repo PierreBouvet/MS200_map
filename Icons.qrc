@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="Images">
+    <file>app_3x3.tiff</file>
+    <file>app.tiff</file>
+  </qresource>
+</RCC>

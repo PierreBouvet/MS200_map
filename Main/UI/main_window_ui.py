@@ -11,67 +11,30 @@
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
     QMetaObject, QObject, QPoint, QRect,
     QSize, QTime, QUrl, Qt)
-from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
-    QFont, QFontDatabase, QGradient, QIcon,
-    QImage, QKeySequence, QLinearGradient, QPainter,
-    QPalette, QPixmap, QRadialGradient, QTransform)
+from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
+    QCursor, QFont, QFontDatabase, QGradient,
+    QIcon, QImage, QKeySequence, QLinearGradient,
+    QPainter, QPalette, QPixmap, QRadialGradient,
+    QTransform)
 from PySide6.QtWidgets import (QApplication, QComboBox, QFrame, QGridLayout,
     QLabel, QLineEdit, QMainWindow, QMenuBar,
     QPushButton, QSizePolicy, QSpinBox, QStatusBar,
     QTextBrowser, QWidget)
+import Icons_rc
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(676, 474)
+        MainWindow.resize(676, 497)
+        self.actionPreferences = QAction(MainWindow)
+        self.actionPreferences.setObjectName(u"actionPreferences")
+        self.actionQuit = QAction(MainWindow)
+        self.actionQuit.setObjectName(u"actionQuit")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.gridLayout = QGridLayout(self.centralwidget)
         self.gridLayout.setObjectName(u"gridLayout")
-        self.frame = QFrame(self.centralwidget)
-        self.frame.setObjectName(u"frame")
-        self.frame.setFrameShape(QFrame.Shape.StyledPanel)
-        self.frame.setFrameShadow(QFrame.Shadow.Raised)
-        self.gridLayout_2 = QGridLayout(self.frame)
-        self.gridLayout_2.setObjectName(u"gridLayout_2")
-        self.b_ScanPorts = QPushButton(self.frame)
-        self.b_ScanPorts.setObjectName(u"b_ScanPorts")
-
-        self.gridLayout_2.addWidget(self.b_ScanPorts, 0, 0, 1, 1)
-
-        self.b_ConnectDisconnect = QPushButton(self.frame)
-        self.b_ConnectDisconnect.setObjectName(u"b_ConnectDisconnect")
-
-        self.gridLayout_2.addWidget(self.b_ConnectDisconnect, 0, 3, 1, 1)
-
-        self.cb_Ports = QComboBox(self.frame)
-        self.cb_Ports.setObjectName(u"cb_Ports")
-
-        self.gridLayout_2.addWidget(self.cb_Ports, 0, 1, 1, 1)
-
-        self.cb_Baudrate = QComboBox(self.frame)
-        self.cb_Baudrate.setObjectName(u"cb_Baudrate")
-
-        self.gridLayout_2.addWidget(self.cb_Baudrate, 0, 2, 1, 1)
-
-
-        self.gridLayout.addWidget(self.frame, 0, 0, 1, 3)
-
-        self.frame_3 = QFrame(self.centralwidget)
-        self.frame_3.setObjectName(u"frame_3")
-        self.frame_3.setFrameShape(QFrame.Shape.StyledPanel)
-        self.frame_3.setFrameShadow(QFrame.Shadow.Raised)
-        self.gridLayout_5 = QGridLayout(self.frame_3)
-        self.gridLayout_5.setObjectName(u"gridLayout_5")
-        self.tB_Log = QTextBrowser(self.frame_3)
-        self.tB_Log.setObjectName(u"tB_Log")
-
-        self.gridLayout_5.addWidget(self.tB_Log, 0, 0, 1, 1)
-
-
-        self.gridLayout.addWidget(self.frame_3, 2, 0, 1, 3)
-
         self.frame_2 = QFrame(self.centralwidget)
         self.frame_2.setObjectName(u"frame_2")
         self.frame_2.setFrameShape(QFrame.Shape.StyledPanel)
@@ -121,6 +84,20 @@ class Ui_MainWindow(object):
 
         self.gridLayout.addWidget(self.frame_2, 1, 0, 1, 1)
 
+        self.frame_3 = QFrame(self.centralwidget)
+        self.frame_3.setObjectName(u"frame_3")
+        self.frame_3.setFrameShape(QFrame.Shape.StyledPanel)
+        self.frame_3.setFrameShadow(QFrame.Shadow.Raised)
+        self.gridLayout_5 = QGridLayout(self.frame_3)
+        self.gridLayout_5.setObjectName(u"gridLayout_5")
+        self.tB_Log = QTextBrowser(self.frame_3)
+        self.tB_Log.setObjectName(u"tB_Log")
+
+        self.gridLayout_5.addWidget(self.tB_Log, 0, 0, 1, 1)
+
+
+        self.gridLayout.addWidget(self.frame_3, 2, 0, 1, 3)
+
         self.frame_4 = QFrame(self.centralwidget)
         self.frame_4.setObjectName(u"frame_4")
         self.frame_4.setFrameShape(QFrame.Shape.StyledPanel)
@@ -160,6 +137,43 @@ class Ui_MainWindow(object):
 
         self.gridLayout.addWidget(self.frame_4, 1, 1, 1, 2)
 
+        self.frame = QFrame(self.centralwidget)
+        self.frame.setObjectName(u"frame")
+        self.frame.setFrameShape(QFrame.Shape.StyledPanel)
+        self.frame.setFrameShadow(QFrame.Shadow.Raised)
+        self.gridLayout_2 = QGridLayout(self.frame)
+        self.gridLayout_2.setObjectName(u"gridLayout_2")
+        self.cb_Baudrate = QComboBox(self.frame)
+        self.cb_Baudrate.setObjectName(u"cb_Baudrate")
+
+        self.gridLayout_2.addWidget(self.cb_Baudrate, 1, 2, 1, 1)
+
+        self.b_ConnectDisconnect = QPushButton(self.frame)
+        self.b_ConnectDisconnect.setObjectName(u"b_ConnectDisconnect")
+
+        self.gridLayout_2.addWidget(self.b_ConnectDisconnect, 0, 4, 2, 1)
+
+        self.cb_Ports = QComboBox(self.frame)
+        self.cb_Ports.setObjectName(u"cb_Ports")
+
+        self.gridLayout_2.addWidget(self.cb_Ports, 1, 1, 1, 1)
+
+        self.b_ScanPorts = QPushButton(self.frame)
+        self.b_ScanPorts.setObjectName(u"b_ScanPorts")
+
+        self.gridLayout_2.addWidget(self.b_ScanPorts, 0, 1, 1, 2)
+
+        self.label = QLabel(self.frame)
+        self.label.setObjectName(u"label")
+        self.label.setMaximumSize(QSize(100, 100))
+        self.label.setPixmap(QPixmap(u":/Images/app_3x3.tiff"))
+        self.label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.gridLayout_2.addWidget(self.label, 0, 0, 2, 1)
+
+
+        self.gridLayout.addWidget(self.frame, 0, 0, 1, 3)
+
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
@@ -176,8 +190,8 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MS2000 Mapping Facilitator", None))
-        self.b_ScanPorts.setText(QCoreApplication.translate("MainWindow", u"Scan Ports", None))
-        self.b_ConnectDisconnect.setText(QCoreApplication.translate("MainWindow", u"Connect/Disconnect", None))
+        self.actionPreferences.setText(QCoreApplication.translate("MainWindow", u"Preferences", None))
+        self.actionQuit.setText(QCoreApplication.translate("MainWindow", u"Quit", None))
         self.l_Nx.setText(QCoreApplication.translate("MainWindow", u"Number of points in x:", None))
         self.l_Ny.setText(QCoreApplication.translate("MainWindow", u"Number of points in y:", None))
         self.l_Rx.setText(QCoreApplication.translate("MainWindow", u"x resolution (mm):", None))
@@ -186,5 +200,8 @@ class Ui_MainWindow(object):
         self.l_Exposure.setText(QCoreApplication.translate("MainWindow", u"Exposure(ms)", None))
         self.b_Launch.setText(QCoreApplication.translate("MainWindow", u"Launch Mapping", None))
         self.b_LoadObjective.setText(QCoreApplication.translate("MainWindow", u"Load Objective Calibration Spreadsheet", None))
+        self.b_ConnectDisconnect.setText(QCoreApplication.translate("MainWindow", u"Connect/Disconnect", None))
+        self.b_ScanPorts.setText(QCoreApplication.translate("MainWindow", u"Scan Ports", None))
+        self.label.setText("")
     # retranslateUi
 

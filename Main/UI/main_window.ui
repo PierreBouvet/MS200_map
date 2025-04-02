@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>676</width>
-    <height>474</height>
+    <height>497</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,53 +15,6 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0" colspan="3">
-     <widget class="QFrame" name="frame">
-      <property name="frameShape">
-       <enum>QFrame::Shape::StyledPanel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Shadow::Raised</enum>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_2">
-       <item row="0" column="0">
-        <widget class="QPushButton" name="b_ScanPorts">
-         <property name="text">
-          <string>Scan Ports</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="3">
-        <widget class="QPushButton" name="b_ConnectDisconnect">
-         <property name="text">
-          <string>Connect/Disconnect</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QComboBox" name="cb_Ports"/>
-       </item>
-       <item row="0" column="2">
-        <widget class="QComboBox" name="cb_Baudrate"/>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="2" column="0" colspan="3">
-     <widget class="QFrame" name="frame_3">
-      <property name="frameShape">
-       <enum>QFrame::Shape::StyledPanel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Shadow::Raised</enum>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_5">
-       <item row="0" column="0">
-        <widget class="QTextBrowser" name="tB_Log"/>
-       </item>
-      </layout>
-     </widget>
-    </item>
     <item row="1" column="0">
      <widget class="QFrame" name="frame_2">
       <property name="frameShape">
@@ -114,6 +67,21 @@
       </layout>
      </widget>
     </item>
+    <item row="2" column="0" colspan="3">
+     <widget class="QFrame" name="frame_3">
+      <property name="frameShape">
+       <enum>QFrame::Shape::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Shadow::Raised</enum>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_5">
+       <item row="0" column="0">
+        <widget class="QTextBrowser" name="tB_Log"/>
+       </item>
+      </layout>
+     </widget>
+    </item>
     <item row="1" column="1" colspan="2">
      <widget class="QFrame" name="frame_4">
       <property name="frameShape">
@@ -160,6 +128,57 @@
       </layout>
      </widget>
     </item>
+    <item row="0" column="0" colspan="3">
+     <widget class="QFrame" name="frame">
+      <property name="frameShape">
+       <enum>QFrame::Shape::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Shadow::Raised</enum>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="1" column="2">
+        <widget class="QComboBox" name="cb_Baudrate"/>
+       </item>
+       <item row="0" column="4" rowspan="2">
+        <widget class="QPushButton" name="b_ConnectDisconnect">
+         <property name="text">
+          <string>Connect/Disconnect</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QComboBox" name="cb_Ports"/>
+       </item>
+       <item row="0" column="1" colspan="2">
+        <widget class="QPushButton" name="b_ScanPorts">
+         <property name="text">
+          <string>Scan Ports</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0" rowspan="2">
+        <widget class="QLabel" name="label">
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>100</height>
+          </size>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="../../Icons.qrc">:/Images/app_3x3.tiff</pixmap>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignmentFlag::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -173,7 +192,19 @@
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionPreferences">
+   <property name="text">
+    <string>Preferences</string>
+   </property>
+  </action>
+  <action name="actionQuit">
+   <property name="text">
+    <string>Quit</string>
+   </property>
+  </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../Icons.qrc"/>
+ </resources>
  <connections/>
 </ui>
