@@ -79,11 +79,12 @@ class SerialApp(QMainWindow):
 
     def load_objectives(self):
         try:
-            df = pd.read_excel(self.objective_file, header=None)
+            df = pd.read_excel(self.objective_file, header=0)
             self.objectives = df.to_dict(orient='records')
             self.ui.cb_Objective.clear()
+            keys = list(self.objectives[0].keys())
             for obj in self.objectives:
-                self.ui.cb_Objective.addItem(str(obj[0]))
+                self.ui.cb_Objective.addItem(str(obj[keys[0]]))
         except Exception as e:
             directory = os.path.dirname(os.path.realpath(__file__))
             QMessageBox.critical(self, "File Error", f"Current directory: {directory}. Could not load objectives: {e}")    
@@ -163,8 +164,3 @@ class SerialApp(QMainWindow):
             while busy:
                 busy = self.is_device_busy()
     
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = SerialApp()
-    window.show()
-    sys.exit(app.exec())
