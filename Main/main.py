@@ -104,8 +104,9 @@ class SerialApp(QMainWindow):
         ny = self.ui.sB_Ny.value()
         deltax = self.ui.le_Rx.text()
         deltay = self.ui.le_Ry.text()
-        dx = self.objectives[objective_index][1]
-        dy = self.objectives[objective_index][2]
+        keys = list(self.objectives[0].keys())
+        dx = self.objectives[objective_index][keys[1]]
+        dy = self.objectives[objective_index][keys[2]]
         xval = -nx * float(deltax) / 2
         yval = -ny * float(deltay) / 2
         
