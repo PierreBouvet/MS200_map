@@ -16,17 +16,20 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QIcon, QImage, QKeySequence, QLinearGradient,
     QPainter, QPalette, QPixmap, QRadialGradient,
     QTransform)
-from PySide6.QtWidgets import (QApplication, QComboBox, QFrame, QGridLayout,
-    QLabel, QLineEdit, QMainWindow, QMenuBar,
-    QPushButton, QSizePolicy, QSpinBox, QStatusBar,
-    QTextBrowser, QWidget)
+from PySide6.QtWidgets import (QAbstractSpinBox, QApplication, QComboBox, QFrame,
+    QGridLayout, QLabel, QLineEdit, QMainWindow,
+    QMenuBar, QPushButton, QSizePolicy, QSpinBox,
+    QStatusBar, QTextBrowser, QWidget)
 import Icons_rc
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(676, 497)
+        MainWindow.resize(691, 457)
+        icon = QIcon()
+        icon.addFile(u":/Images/app_3x3.tiff", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        MainWindow.setWindowIcon(icon)
         self.actionPreferences = QAction(MainWindow)
         self.actionPreferences.setObjectName(u"actionPreferences")
         self.actionQuit = QAction(MainWindow)
@@ -48,6 +51,8 @@ class Ui_MainWindow(object):
 
         self.sB_Nx = QSpinBox(self.frame_2)
         self.sB_Nx.setObjectName(u"sB_Nx")
+        self.sB_Nx.setButtonSymbols(QAbstractSpinBox.ButtonSymbols.UpDownArrows)
+        self.sB_Nx.setMaximum(9999)
 
         self.gridLayout_3.addWidget(self.sB_Nx, 0, 2, 1, 1)
 
@@ -58,6 +63,7 @@ class Ui_MainWindow(object):
 
         self.sB_Ny = QSpinBox(self.frame_2)
         self.sB_Ny.setObjectName(u"sB_Ny")
+        self.sB_Ny.setMaximum(9999)
 
         self.gridLayout_3.addWidget(self.sB_Ny, 1, 2, 1, 1)
 
@@ -177,7 +183,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 676, 37))
+        self.menubar.setGeometry(QRect(0, 0, 691, 37))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
@@ -197,7 +203,7 @@ class Ui_MainWindow(object):
         self.l_Rx.setText(QCoreApplication.translate("MainWindow", u"x resolution (mm):", None))
         self.l_Ry.setText(QCoreApplication.translate("MainWindow", u"y resolution(mm): ", None))
         self.l_Objective.setText(QCoreApplication.translate("MainWindow", u"Objective", None))
-        self.l_Exposure.setText(QCoreApplication.translate("MainWindow", u"Exposure(ms)", None))
+        self.l_Exposure.setText(QCoreApplication.translate("MainWindow", u"Exposure (ms)", None))
         self.b_Launch.setText(QCoreApplication.translate("MainWindow", u"Launch Mapping", None))
         self.b_LoadObjective.setText(QCoreApplication.translate("MainWindow", u"Load Objective Calibration Spreadsheet", None))
         self.b_ConnectDisconnect.setText(QCoreApplication.translate("MainWindow", u"Connect/Disconnect", None))
