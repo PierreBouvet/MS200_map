@@ -5,6 +5,7 @@ import serial.tools.list_ports
 import pandas as pd
 from PySide6.QtWidgets import QApplication, QMainWindow, QMessageBox, QFileDialog
 from Main.UI.main_window_ui import Ui_MainWindow
+import time
 
 class SerialApp(QMainWindow):
     objective_file = ""
@@ -116,6 +117,13 @@ class SerialApp(QMainWindow):
             f"RT Z={float(exposure):.4f}", # Sets the waiting time between scans
             "B X=0.05 Y=0.05", # Sets the backlash to 50 microns
             f"R X={float(dx):.4f} Y={float(dy):.4f}", # Moves the stage to center the position on the objective center
+        ]
+
+        for cmd in commands:
+            self.send_command(cmd)
+        time.sleep(1)  # Wait for the commands to be processed
+
+        commands = [
             "Z", # Zeroth the stage
             f"AR X={nx} Y={ny} Z={float(deltax):.4f} F={float(deltay):.4f}", # Sets the array to be acquired
             f"AH X={float(xval):.4f} Y={float(yval):.4f}", # Moves the stage to the first point of the array
