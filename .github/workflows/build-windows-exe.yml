@@ -24,7 +24,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install pyinstaller PySide6 pandas pyserial openpyxl pillow time # Add any other dependencies
+        pip install pyinstaller PySide6 pandas pyserial openpyxl pillow # Add any other dependencies
 
     - name: Build EXE
       run: |
@@ -34,4 +34,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: Windows-Executable
-        path: dist/MS2000 map facilitator.exe  # This is where PyInstaller puts the .exe
+        path: dist/MS2000_Map.exe  # This is where PyInstaller puts the .exe
