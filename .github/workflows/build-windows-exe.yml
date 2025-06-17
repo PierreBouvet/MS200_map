@@ -34,4 +34,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: Windows-Executable
-        path: dist/MS2000_Map.exe  # This is where PyInstaller puts the .exe
+        path: build/MS2000_Map.exe  # This is where PyInstaller puts the .exe
