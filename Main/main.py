@@ -117,6 +117,7 @@ class SerialApp(QMainWindow):
             f"RT Z={float(exposure):.4f}", # Sets the waiting time between scans
             "B X=0.05 Y=0.05", # Sets the backlash to 50 microns
             f"R X={float(dx):.4f} Y={float(dy):.4f}", # Moves the stage to center the position on the objective center
+            "WT X=0.05 Y=0.05", # Sets the wait time to 50 ms
         ]
 
         for cmd in commands:
