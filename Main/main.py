@@ -36,6 +36,7 @@ class SerialApp(QMainWindow):
         
         # Populate baud rate options
         self.ui.cb_Baudrate.addItems(["9600","19200","28800","115200"])
+        self.ui.cb_Baudrate.setCurrentText("115200")
     
     def connect_to_serial(self):
         port = self.ui.cb_Ports.currentText()
