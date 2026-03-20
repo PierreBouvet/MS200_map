@@ -4,9 +4,22 @@ import serial
 import serial.tools.list_ports
 import pandas as pd
 from PySide6.QtWidgets import QApplication, QMainWindow, QMessageBox, QFileDialog
+from PySide6.QtCore import QTimer
 from Main.UI.main_window_ui import Ui_MainWindow
 import time
 
+
+def get_resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        # In development, look for resources in the project root
+        # (Assuming Main/main.py is two levels deep from the root)
+        base_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+    return os.path.join(base_path, relative_path)
 class SerialApp(QMainWindow):
     objective_file = ""
     def __init__(self):
@@ -37,6 +50,11 @@ class SerialApp(QMainWindow):
         # Populate baud rate options
         self.ui.cb_Baudrate.addItems(["9600","19200","28800","115200"])
         self.ui.cb_Baudrate.setCurrentText("115200")
+
+        # Initialize scan timer
+        self.scan_timer = QTimer(self)
+        self.scan_timer.setInterval(10000)  # 10 seconds
+        self.scan_timer.timeout.connect(self.check_scan_status)
     
     def connect_to_serial(self):
         port = self.ui.cb_Ports.currentText()
@@ -74,10 +92,26 @@ class SerialApp(QMainWindow):
 
     def is_device_busy(self) -> bool:
         """Returns True if any axis is busy."""
+        if not self.serial_conn or not self.serial_conn.is_open:
+            return False
+        
         self.serial_conn.write(f"/\r\n".encode())
         response = self.serial_conn.readline().decode().strip()
             
         return "B" in response
+
+    def check_scan_status(self):
+        """Checks if the scan is finished and notifies the user."""
+        if not self.is_device_busy():
+            self.scan_timer.stop()
+            self.ui.tB_Log.append("Scan is finished!")
+            
+            # Play jingle
+            jingle_path = get_resource_path("Lab_Rat_Blues.mp3")
+            if os.path.exists(jingle_path):
+                os.system(f'afplay "{jingle_path}" &')
+            
+            QMessageBox.information(self, "Scan Finished", "The scan is finished!")
 
     def load_objectives(self):
         try:
@@ -133,8 +167,15 @@ class SerialApp(QMainWindow):
             "AR" # Launches the scan
         ]
         
-        for cmd in commands:
+        for cmd in commands[:-1]:
             self.send_command(cmd)
+        
+        # Launch scan non-blockingly
+        self.send_command(commands[-1], wait=False)
+        
+        # Start polling timer after launching the scan
+        self.ui.tB_Log.append("Scan launched. Polling status every 10s...")
+        self.scan_timer.start()
     
     def open_objective_file(self):
         self.objective_file = QFileDialog.getOpenFileName(self, "Open Objective File")[0]
@@ -158,7 +199,7 @@ class SerialApp(QMainWindow):
         else:
             self.connect_to_serial()
 
-    def send_command(self, cmd):
+    def send_command(self, cmd, wait=True):
         if self.serial_conn:
             self.serial_conn.write(f"{cmd}\r\n".encode())
             response = self.serial_conn.readline().decode().strip()
@@ -171,7 +212,10 @@ class SerialApp(QMainWindow):
             
             self.ui.tB_Log.append(f"< {response}")
 
-            busy = True
-            while busy:
-                busy = self.is_device_busy()
+            if wait:
+                busy = True
+                while busy:
+                    QApplication.processEvents()
+                    time.sleep(0.01)
+                    busy = self.is_device_busy()
     

@@ -1,3 +1,3 @@
-([('main',
-   '/Users/pierrebouvet/Documents/Code/MS2000 GUI driver/dist/main',
+([('MS2000_Mapper',
+   '/Users/pierrebouvet/Documents/Code/MS200_map/dist/MS2000_Mapper',
    'EXECUTABLE')],)
