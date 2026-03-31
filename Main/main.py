@@ -163,7 +163,7 @@ class SerialApp(QMainWindow):
             f"AH X={float(xval):.4f} Y={float(yval):.4f}", # Moves the stage to the first point of the array
             "TTL Y=2", # Initiates the trigger out command
             "B X=0.01 Y=0.01", # Sets the backlash to 10 microns
-            f"RT Z={float(exposure):.4f}", # Sets the waiting time between scans
+            f"RT Z={1e3*float(exposure):.4f}", # Sets the waiting time between scans
             "AR" # Launches the scan
         ]
         
